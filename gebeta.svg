@@ -7,7 +7,7 @@
    viewBox="0 0 1920 1080"
    version="1.1"
    id="svg1"
-   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    sodipodi:docname="gebeta.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,12 +25,12 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="0.88"
-     inkscape:cx="1475.5682"
-     inkscape:cy="781.25"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="2992"
-     inkscape:window-y="700"
+     inkscape:cx="1476.1364"
+     inkscape:cy="690.34091"
+     inkscape:window-width="3373"
+     inkscape:window-height="1371"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -251,10 +251,10 @@
        inkscape:collect="always"
        style="color-interpolation-filters:sRGB"
        id="filter5"
-       x="-0.073981165"
-       y="-0.048864706"
-       width="1.1479623"
-       height="1.0977294">
+       x="-0.092824548"
+       y="-0.048671819"
+       width="1.1856491"
+       height="1.0973436">
       <feGaussianBlur
          inkscape:collect="always"
          stdDeviation="1.94061"
@@ -815,7 +815,22 @@
        transform="translate(377.27273,44.318182)"><tspan
          x="1380.6445"
          y="1015.2366"
-         id="tspan6">© 2026 by Oliver Thiel</tspan></text>
+         id="tspan8">© 2026 by Oliver Thiel</tspan></text>
+    <path
+       d="m 1500.1304,487.49612 -28.53,24.67645 h -27.0015 v 31.75491 h 26.5924 l 28.9391,25.03237 z"
+       style="fill:#1a1a1a;fill-opacity:1;stroke:#00bc00;stroke-width:1.016;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="sound"
+       class="target" />
+    <path
+       d="m 1510.3433,511.44865 a 29.832092,29.832092 0 0 1 0,32.73882 m 10.8619,-43.60075 a 45.895529,45.895529 0 0 1 0,54.46268 m 9.9441,-64.40672 a 59.358216,59.358216 0 0 1 0,74.35076"
+       style="fill:none;stroke:#00bb7f;stroke-width:7.649;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="sound-on" />
+    <path
+       d="m 1507.8937,503.90194 40.0911,48.10945 m 0,-48.10945 -40.0911,48.10945"
+       fill="none"
+       stroke-linecap="round"
+       id="sound-off"
+       style="stroke:#ff0000;stroke-width:8;stroke-dasharray:none;stroke-opacity:1" />
   </g>
   <script
      id="mesh_polyfill"

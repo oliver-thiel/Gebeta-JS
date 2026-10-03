@@ -102,6 +102,7 @@ const state = {
   currentHouse: "",
   turn: -1,
   currentSound: "",
+  soundON: true,
   language: "",
   inactivityTimer: 0,
   statusTimer: 0,
@@ -140,7 +141,7 @@ function playCurrentSound() {
 
 function playSound(soundPath) {
   // Play the current sound if available, or show a message prompting the user to click to play if autoplay is blocked
-  if (!soundPath) {
+  if (!soundPath || !state.soundON) {
     return;
   }
 
@@ -157,9 +158,29 @@ function playSound(soundPath) {
     if (state.screen === "choose" || state.screen === "sow") {
       showStatus("Click the questionmark to get help.",
         "Klick auf das Fragezeichen, um Hilfe zu bekommen.",
-        "Klikk på spøramålstegnet for å få hjelp.", "bad", 2500);
+        "Klikk på spørsmålstegnet for å få hjelp.", "bad", 2500);
     }
   });
+}
+
+function toggleSound() {
+  // Switches the sound on or off
+  if (state.soundON) {
+      state.soundON = false;
+    } else {
+      state.soundON = true;
+    }
+  const onIcon = els.svgHost.querySelector("#sound-on");
+  const offIcon = els.svgHost.querySelector("#sound-off");
+  if (onIcon && offIcon) {
+    if (!state.soundON) {
+        onIcon.style.display = "none";
+        offIcon.style.display = "block";
+      } else {
+        onIcon.style.display = "block";
+        offIcon.style.display = "none";
+      }
+  }
 }
 
 function hidePlayer(player) {
@@ -209,7 +230,7 @@ async function loadSvg(svgPath, soundPath, screen) {
     if (screen === "choose") {
       hidePlayer(1);
       if (state.AI) {
-        showStatus("You play against an AI", "Du spielst gegen eine KI.", "Du spiller mot en KI", playerColour(), 2500);
+        showStatus("You play against an AI.", "Du spielst gegen eine KI.", "Du spiller mot en KI.", playerColour(), 2500);
       } else {
         showStatus(`Turn ${state.turn}: Player ${state.currentPlayer + 1}'s turn.`, 
           `Runde ${state.turn}: Spieler ${state.currentPlayer + 1} ist am Zug.`, 
@@ -238,9 +259,13 @@ function prepareSvg() {
   svg.removeAttribute("height");
   svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
   svg.setAttribute("role", "img");
-  svg.querySelectorAll(".target, .counter, .rules, .help-btn, .player").forEach((node) => {
+  svg.querySelectorAll(".target, .counter, .sound, .rules, .help-btn, .player").forEach((node) => {
     node.setAttribute("tabindex", "0");
   });
+  const offIcon = svg.querySelector(`#sound-off`);
+  if (offIcon) {
+    offIcon.style.display = "none";
+  }
 
   svg.querySelectorAll(".counter").forEach((node) => {
     node.addEventListener("pointerdown", (event) => handlePointerDown(event), { passive: false });
@@ -639,6 +664,11 @@ function handleActivation(event) {
   if (!choice) {
     return
   } else {
+    if (choice.id === "sound") {
+        toggleSound();
+        return;
+    }
+    
     if (state.screen === "opponent") {
       if (choice.id === "robot") {
         state.AI = true;
@@ -751,13 +781,22 @@ function handlePointerMove(event) {
   const drag = state.drag;
   if (!drag || drag.pointerId !== normalizePointerId(event.pointerId)) {
     if (target) {
-      const house = houses.find((h) => h.name === target.id);
-      if (state.screen !== "sow" || target.id === "help-button") {
-        if (state.screen !== "choose") {
+      if (target.id === "help-button" || target.id === "gebeta" || target.id === "sound") {
+        highlightTarget(target.id, 500);
+        return;
+      }
+      if (state.screen === "language" || state.screen === "opponent") {
+        highlightTarget(target.id, 500);
+        return;
+      }
+      if (state.screen === "choose") {
+        const house = houses.find((h) => h.name === target.id);
+        if (house) {
+          if (house.owner === state.currentPlayer && house.content > 0) {
           highlightTarget(target.id, 500);
-        } else if (house && house.owner === state.currentPlayer && house.content > 0) {
-          highlightTarget(target.id, 500);
-        }
+          }
+        } 
+        return;
       }
     }
     return;
@@ -1156,7 +1195,7 @@ function showEndScreen() {
       messageNO = "Det er uavgjort" + scoreMessage;
     }
   }
-  
+
   state.screen = "endscreen";
   state.currentSound = "restart"
   showStatus(messageEN, messageDE, messageNO, type, 10000);
